@@ -174,13 +174,13 @@ export default DebounceExample;
 ```
 </details>
 
-**2. `useCallback` 을 이용한 예제 2번**
+**2.`useCallback` 을 이용한 예제 2번**
 
 - 위 1번 예제의 경우 함수를 컴포넌트 외부에서 선언하기 때문에 컴포넌트 내부의 `state` 혹은 `props` 에 직접적으로 접근하기 어렵다는 단점이 있었습니다.
 - 이를 위해 함수를 컴포넌트 내부로 이동하고, `useCallback` 훅을 사용하여 메모제이션 함으로써 함수의 재생성을 방지하는 2번 예제를 작성해보았습니다.
 
 <details>
-  <summara>코드 보기</summara>
+  <summary>코드 보기</summary>
 
   ```tsx
   import { useState, useCallback } from "react";
