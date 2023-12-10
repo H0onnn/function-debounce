@@ -7,49 +7,38 @@ const DebounceWithUseCallback = () => {
   // eslint-disable-next-line
   const [buttonClickCount, setButtonClickCount] = useState<number>(0);
 
-  const debouncedInputValue = useCallback(
-    debounce((debouncedValue: string) => {
+  const debouncedInputValue = useCallback(() => {
+    const { debounced, cancel } = debounce((debouncedValue: string) => {
       console.log("디바운싱 input", debouncedValue);
-    }).debounced,
-    []
-  );
+    });
 
-  // 버튼 클릭에 대한 디바운싱 함수
-  const debouncedButton = useCallback(
-    debounce(
+    return { debounced, cancel };
+  }, []);
+
+  const debouncedButtonClick = useCallback(() => {
+    const { debounced, cancel } = debounce(
       () => {
         setButtonClickCount((prevCount) => prevCount + 1);
         console.log("디바운싱 button");
       },
       1000,
       true
-    ).debounced,
-    []
-  );
+    );
 
-  // 버튼 클릭 디바운싱 취소 함수
-  const cancelButtonDebounce = useCallback(
-    debounce(
-      () => {
-        console.log("디바운싱 button cancel");
-      },
-      1000,
-      true
-    ).cancel,
-    []
-  );
+    return { debounced, cancel };
+  }, []);
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-    debouncedInputValue(e.target.value);
+    debouncedInputValue().debounced(e.target.value);
   };
 
   const handleButtonClick = () => {
-    debouncedButton();
+    debouncedButtonClick().debounced();
   };
 
   const handleCancelDebouncedButton = () => {
-    cancelButtonDebounce();
+    debouncedButtonClick().cancel();
   };
 
   return (
