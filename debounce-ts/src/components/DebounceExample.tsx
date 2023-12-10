@@ -27,6 +27,7 @@ const DebounceExample = () => {
 
   const handleButtonClick = () => {
     setButtonClickCount((prevCount) => prevCount + 1);
+    console.log("디바운싱 button");
 
     debouncedButtonClick.debounced();
   };

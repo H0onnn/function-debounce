@@ -31,8 +31,7 @@ const DebounceWithUseCallback = () => {
   const cancelButtonDebounce = useCallback(
     debounce(
       () => {
-        setButtonClickCount((prevCount) => prevCount + 1);
-        console.log("디바운싱 button");
+        console.log("디바운싱 button cancel");
       },
       1000,
       true
