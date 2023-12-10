@@ -6,31 +6,35 @@ const DebounceWithRef = () => {
   const [debouncedValue, setDebouncedValue] = useState<string>("");
   const [buttonClickCount, setButtonClickCount] = useState<number>(0);
 
-  // Input 입력 이벤트 값에 대한 디바운싱 처리
-  const debouncedInputHandler = useRef(
+  // Input 디바운싱 처리를 위한 ref
+  const debouncedInputRef = useRef(
     debounce((value: string) => {
       setDebouncedValue(value);
     })
-  ).current;
+  );
 
-  // Button 클릭 이벤트에 대한 디바운싱 처리
-  const debouncedButtonHandler = useRef(
+  // Button 디바운싱 처리를 위한 ref
+  const debouncedButtonRef = useRef(
     debounce(
       () => {
         setButtonClickCount((prevCount) => prevCount + 1);
       },
-      1000,
-      true
-    ) // wait = 1000ms, immediate = true 적용
-  ).current;
+      1000, // wait = 1000ms
+      true // immediate = true
+    )
+  );
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValue(e.target.value);
-    debouncedInputHandler.debounced(e.target.value);
+    debouncedInputRef.current.debounced(e.target.value);
   };
 
   const handleButtonClick = () => {
-    debouncedButtonHandler.debounced();
+    debouncedButtonRef.current.debounced();
+  };
+
+  const handleCancelDebouncedButton = () => {
+    debouncedButtonRef.current.cancel();
   };
 
   useEffect(() => {
@@ -64,7 +68,7 @@ const DebounceWithRef = () => {
         placeholder="콘솔 창을 확인해보세요."
       />
       <button onClick={handleButtonClick}>클릭</button>
-      <button onClick={() => debouncedButtonHandler.cancel()}>취소</button>
+      <button onClick={handleCancelDebouncedButton}>취소</button>
     </div>
   );
 };
