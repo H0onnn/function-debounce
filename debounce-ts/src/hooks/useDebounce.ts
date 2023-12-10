@@ -59,7 +59,7 @@ const useDebounce = <T extends (...args: any[]) => any>(
     return () => {
       timeoutId && clearTimeout(timeoutId);
     };
-  }, [timeoutId, promiseResolve]);
+  }, [timeoutId]);
 
   return { debounced, cancel };
 };
